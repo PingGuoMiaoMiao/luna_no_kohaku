@@ -1,0 +1,27 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/cache/lru"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct LRUCache[K, V] {
+  capacity : Int
+  data : Array[(K, V)]
+  access_order : Array[Int]
+  len : Int
+  next_order : Int
+}
+fn[K, V] LRUCache::capacity(Self[K, V]) -> Int
+fn[K, V] LRUCache::clear(Self[K, V]) -> Self[K, V]
+fn[K : Compare, V] LRUCache::contains_key(Self[K, V], K) -> Bool
+fn[K : Compare, V] LRUCache::get(Self[K, V], K) -> (Self[K, V], V?)
+fn[K, V] LRUCache::new(Int) -> Self[K, V]
+fn[K : Compare, V] LRUCache::put(Self[K, V], K, V) -> Self[K, V]
+fn[K, V] LRUCache::size(Self[K, V]) -> Int
+
+// Type aliases
+
+// Traits
+

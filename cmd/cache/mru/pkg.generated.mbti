@@ -1,0 +1,27 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/cache/mru"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct MRUCache[K, V] {
+  capacity : Int
+  data : Array[(K, V)]
+  access_order : Array[Int]
+  len : Int
+  next_order : Int
+}
+fn[K, V] MRUCache::capacity(Self[K, V]) -> Int
+fn[K, V] MRUCache::clear(Self[K, V]) -> Self[K, V]
+fn[K : Compare, V] MRUCache::contains_key(Self[K, V], K) -> Bool
+fn[K : Compare, V] MRUCache::get(Self[K, V], K) -> (Self[K, V], V?)
+fn[K, V] MRUCache::new(Int) -> Self[K, V]
+fn[K : Compare, V] MRUCache::put(Self[K, V], K, V) -> Self[K, V]
+fn[K, V] MRUCache::size(Self[K, V]) -> Int
+
+// Type aliases
+
+// Traits
+

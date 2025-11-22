@@ -1,0 +1,24 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/dsa/priority_queue"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct PriorityQueue[T] {
+  heap : Array[T]
+  len : Int
+}
+fn[T] PriorityQueue::clear(Self[T]) -> Self[T]
+fn[T] PriorityQueue::is_empty(Self[T]) -> Bool
+fn[T] PriorityQueue::new() -> Self[T]
+fn[T] PriorityQueue::peek(Self[T]) -> T?
+fn[T : Compare] PriorityQueue::pop(Self[T]) -> (Self[T], T?)
+fn[T : Compare] PriorityQueue::push(Self[T], T) -> Self[T]
+fn[T] PriorityQueue::size(Self[T]) -> Int
+
+// Type aliases
+
+// Traits
+

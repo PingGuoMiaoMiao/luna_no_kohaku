@@ -1,0 +1,28 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/dsa/stack"
+
+// Values
+const STACK_SO_SIZE : Int = 8
+
+// Errors
+
+// Types and methods
+pub struct Stack[T] {
+  small_buffer : Array[T]
+  large_buffer : Array[T]
+  use_small : Bool
+  len : Int
+}
+fn[T] Stack::capacity(Self[T]) -> Int
+fn[T] Stack::clear(Self[T]) -> Self[T]
+fn[T] Stack::is_empty(Self[T]) -> Bool
+fn[T] Stack::new() -> Self[T]
+fn[T] Stack::peek(Self[T]) -> T?
+fn[T] Stack::pop(Self[T]) -> (Self[T], T?)
+fn[T] Stack::push(Self[T], T) -> Self[T]
+fn[T] Stack::size(Self[T]) -> Int
+
+// Type aliases
+
+// Traits
+

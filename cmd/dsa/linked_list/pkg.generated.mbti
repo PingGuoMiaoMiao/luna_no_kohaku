@@ -1,0 +1,31 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/dsa/linked_list"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct LinkedList[T] {
+  buffer : Array[T]
+  front : Int
+  len : Int
+}
+fn[T] LinkedList::back(Self[T]) -> T?
+fn[T] LinkedList::clear(Self[T]) -> Self[T]
+fn[T] LinkedList::front(Self[T]) -> T?
+fn[T] LinkedList::get(Self[T], Int) -> T?
+fn[T] LinkedList::insert_at(Self[T], Int, T) -> Self[T]?
+fn[T] LinkedList::is_empty(Self[T]) -> Bool
+fn[T] LinkedList::new() -> Self[T]
+fn[T] LinkedList::pop_back(Self[T]) -> (Self[T], T?)
+fn[T] LinkedList::pop_front(Self[T]) -> (Self[T], T?)
+fn[T] LinkedList::push_back(Self[T], T) -> Self[T]
+fn[T] LinkedList::push_front(Self[T], T) -> Self[T]
+fn[T] LinkedList::remove_at(Self[T], Int) -> (Self[T], T?)
+fn[T] LinkedList::size(Self[T]) -> Int
+
+// Type aliases
+
+// Traits
+

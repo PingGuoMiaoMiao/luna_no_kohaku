@@ -1,0 +1,25 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/cache/common"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct SimpleMap[K, V] {
+  keys : Array[K]
+  values : Array[V]
+  len : Int
+}
+fn[K, V] SimpleMap::clear(Self[K, V]) -> Self[K, V]
+fn[K : Compare, V] SimpleMap::contains_key(Self[K, V], K) -> Bool
+fn[K : Compare, V] SimpleMap::get(Self[K, V], K) -> (Self[K, V], V?)
+fn[K, V] SimpleMap::new() -> Self[K, V]
+fn[K : Compare, V] SimpleMap::put(Self[K, V], K, V) -> Self[K, V]
+fn[K : Compare, V] SimpleMap::remove(Self[K, V], K) -> (Self[K, V], Bool)
+fn[K, V] SimpleMap::size(Self[K, V]) -> Int
+
+// Type aliases
+
+// Traits
+

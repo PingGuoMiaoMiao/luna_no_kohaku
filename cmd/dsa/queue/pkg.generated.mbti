@@ -1,0 +1,25 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/dsa/queue"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct Queue[T] {
+  buffer : Array[T]
+  front : Int
+  len : Int
+}
+fn[T] Queue::clear(Self[T]) -> Self[T]
+fn[T] Queue::dequeue(Self[T]) -> (Self[T], T?)
+fn[T] Queue::enqueue(Self[T], T) -> Self[T]
+fn[T] Queue::front(Self[T]) -> T?
+fn[T] Queue::is_empty(Self[T]) -> Bool
+fn[T] Queue::new() -> Self[T]
+fn[T] Queue::size(Self[T]) -> Int
+
+// Type aliases
+
+// Traits
+

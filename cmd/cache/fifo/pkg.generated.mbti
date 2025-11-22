@@ -1,0 +1,25 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/cache/fifo"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct FIFOCache[K, V] {
+  capacity : Int
+  data : Array[(K, V)]
+  len : Int
+}
+fn[K, V] FIFOCache::capacity(Self[K, V]) -> Int
+fn[K, V] FIFOCache::clear(Self[K, V]) -> Self[K, V]
+fn[K : Compare, V] FIFOCache::contains_key(Self[K, V], K) -> Bool
+fn[K : Compare, V] FIFOCache::get(Self[K, V], K) -> (Self[K, V], V?)
+fn[K, V] FIFOCache::new(Int) -> Self[K, V]
+fn[K : Compare, V] FIFOCache::put(Self[K, V], K, V) -> Self[K, V]
+fn[K, V] FIFOCache::size(Self[K, V]) -> Int
+
+// Type aliases
+
+// Traits
+

@@ -1,0 +1,29 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/dsa/bst"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct BST[T] {
+  values : Array[T]
+  len : Int
+}
+fn[T] BST::clear(Self[T]) -> Self[T]
+fn[T : Compare] BST::inorder(Self[T]) -> Array[T]
+fn[T : Compare] BST::insert(Self[T], T) -> Self[T]
+fn[T] BST::is_empty(Self[T]) -> Bool
+fn[T : Compare] BST::max(Self[T]) -> T?
+fn[T : Compare] BST::min(Self[T]) -> T?
+fn[T] BST::new() -> Self[T]
+fn[T] BST::postorder(Self[T]) -> Array[T]
+fn[T] BST::preorder(Self[T]) -> Array[T]
+fn[T : Compare] BST::remove(Self[T], T) -> (Self[T], Bool)
+fn[T : Compare] BST::search(Self[T], T) -> Bool
+fn[T] BST::size(Self[T]) -> Int
+
+// Type aliases
+
+// Traits
+

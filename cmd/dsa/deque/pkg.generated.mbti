@@ -1,0 +1,28 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/dsa/deque"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct Deque[T] {
+  buffer : Array[T]
+  front : Int
+  len : Int
+}
+fn[T] Deque::back(Self[T]) -> T?
+fn[T] Deque::clear(Self[T]) -> Self[T]
+fn[T] Deque::front(Self[T]) -> T?
+fn[T] Deque::is_empty(Self[T]) -> Bool
+fn[T] Deque::new() -> Self[T]
+fn[T] Deque::pop_back(Self[T]) -> (Self[T], T?)
+fn[T] Deque::pop_front(Self[T]) -> (Self[T], T?)
+fn[T] Deque::push_back(Self[T], T) -> Self[T]
+fn[T] Deque::push_front(Self[T], T) -> Self[T]
+fn[T] Deque::size(Self[T]) -> Int
+
+// Type aliases
+
+// Traits
+
