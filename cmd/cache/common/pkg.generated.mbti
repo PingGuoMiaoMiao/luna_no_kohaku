@@ -4,6 +4,16 @@ package "PingGuoMiaoMiao/luna_no_kohaku/cmd/cache/common"
 // Values
 fn[T] append(Array[T], T) -> Array[T]
 
+fn[T] exists(Array[T], (T) -> Bool) -> Bool
+
+fn[T] filter(Array[T], (T) -> Bool) -> Array[T]
+
+fn[T] find_index(Array[T], (T) -> Bool) -> Int
+
+fn[T, U] fold(Array[T], U, (U, T) -> U) -> U
+
+fn[T, U] map(Array[T], (T) -> U) -> Array[U]
+
 fn[T] remove_at(Array[T], Int) -> Array[T]
 
 fn[T] update_array(Array[T], Int, T) -> Array[T]

@@ -78,6 +78,7 @@ fn update_frequency(
   }
   let cf = freq_map[idx]
   if cf.char == ch {
+    // 使用 lambda 表达式更新频率映射
     let new_map = {
       let arr = []
       for i = 0; i < freq_map.length(); i = i + 1 {
@@ -111,7 +112,7 @@ pub fn build_huffman_tree(frequencies : Array[CharFreq]) -> HuffmanNode? {
     return Some(HuffmanNode::leaf(cf.char, cf.freq))
   }
 
-  // 创建初始节点列表
+  // 使用 lambda 表达式创建初始节点列表
   let nodes = {
     let arr = []
     for i = 0; i < frequencies.length(); i = i + 1 {
@@ -143,7 +144,7 @@ fn build_tree(nodes : Array[HuffmanNode]) -> HuffmanNode? {
   // 创建新内部节点
   let new_node = HuffmanNode::internal(node1.freq + node2.freq, node1, node2)
 
-  // 移除已合并的节点，添加新节点
+  // 使用 lambda 表达式移除已合并的节点，添加新节点
   let new_nodes = {
     let arr = []
     for i = 0; i < nodes.length(); i = i + 1 {

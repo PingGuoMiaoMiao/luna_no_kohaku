@@ -1,21 +1,34 @@
 ///| 序列化和反序列化工具
 
 ///|
+/// 使用 lambda 表达式折叠数组（辅助函数）
+fn[T, U] fold(arr : Array[T], init : U, f : (U, T) -> U) -> U {
+  let mut acc = init
+  for i = 0; i < arr.length(); i = i + 1 {
+    acc = f(acc, arr[i])
+  }
+  acc
+}
+
+///|
 /// 将整数数组序列化为字符串
 pub fn serialize_ints(data : Array[Int]) -> String {
-  let mut result = ""
-  for i = 0; i < data.length(); i = i + 1 {
-    if i > 0 {
-      result = result + ","
-    }
-    result = result + data[i].to_string()
+  if data.length() == 0 {
+    return ""
   }
-  result
+  fold(data, "", fn(acc, x) {
+    if acc.length() == 0 {
+      x.to_string()
+    } else {
+      acc + "," + x.to_string()
+    }
+  })
 }
 
 ///| 将字符串反序列化为整数数组
 
 ///|
+/// TODO: 实现完整的整数反序列化（支持多位数、负数等）
 /// 注意：简化实现，假设每个整数用单个字符表示
 pub fn deserialize_ints(data : String) -> Array[Int] {
   if data.length() == 0 {
@@ -44,14 +57,16 @@ pub fn deserialize_ints(data : String) -> Array[Int] {
 ///|
 /// 将字符串数组序列化
 pub fn serialize_strings(data : Array[String]) -> String {
-  let mut result = ""
-  for i = 0; i < data.length(); i = i + 1 {
-    if i > 0 {
-      result = result + "|"
-    }
-    result = result + data[i]
+  if data.length() == 0 {
+    return ""
   }
-  result
+  fold(data, "", fn(acc, x) {
+    if acc.length() == 0 {
+      x
+    } else {
+      acc + "|" + x
+    }
+  })
 }
 
 ///|
@@ -81,16 +96,10 @@ pub fn deserialize_strings(data : String) -> Array[String] {
 
 ///|
 /// 将布尔数组序列化为位字符串
+/// 使用 lambda 表达式优化
 pub fn serialize_bools(data : Array[Bool]) -> String {
-  let mut result = ""
-  for i = 0; i < data.length(); i = i + 1 {
-    if data[i] {
-      result = result + "1"
-    } else {
-      result = result + "0"
-    }
-  }
-  result
+  // 使用 fold 和 lambda 表达式
+  fold(data, "", fn(acc, x) { acc + (if x { "1" } else { "0" }) })
 }
 
 ///|
@@ -98,8 +107,7 @@ pub fn serialize_bools(data : Array[Bool]) -> String {
 pub fn deserialize_bools(data : String) -> Array[Bool] {
   let result = []
   for i = 0; i < data.length(); i = i + 1 {
-    let ch = data[i]
-    result.push(ch == '1') |> ignore
+    result.push(data[i] == '1') |> ignore
   }
   result
 }
@@ -107,16 +115,14 @@ pub fn deserialize_bools(data : String) -> Array[Bool] {
 ///|
 /// 简单的 JSON 风格序列化（仅支持基本类型）
 pub fn serialize_json(data : Array[(String, String)]) -> String {
-  let mut result = "{"
-  let mut first = true
-  for i = 0; i < data.length(); i = i + 1 {
-    let (key, value) = data[i]
-    if !first {
-      result = result + ","
+  let json_content = fold(data, "", fn(acc, pair) {
+    let (key, value) = pair
+    let entry = "\"" + key + "\":\"" + value + "\""
+    if acc.length() == 0 {
+      entry
+    } else {
+      acc + "," + entry
     }
-    result = result + "\"" + key + "\":\"" + value + "\""
-    first = false
-  }
-  result = result + "}"
-  result
+  })
+  "{" + json_content + "}"
 }

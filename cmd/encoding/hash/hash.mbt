@@ -2,6 +2,7 @@
 
 ///|
 /// MD5 哈希函数（简化实现）
+/// TODO: 实现完整的 MD5 算法（RFC 1321）
 pub fn md5(data : String) -> String {
   // MD5 的完整实现非常复杂，这里提供简化版本
   // 实际应用中应使用标准库或经过验证的实现
@@ -19,6 +20,7 @@ pub fn md5(data : String) -> String {
 
 ///|
 /// SHA1 哈希函数（简化实现）
+/// TODO: 实现完整的 SHA1 算法（RFC 3174）
 pub fn sha1(data : String) -> String {
   // SHA1 的完整实现非常复杂，这里提供简化版本
   // 实际应用中应使用标准库或经过验证的实现
@@ -55,8 +57,7 @@ fn int_to_hex(value : Int) -> String {
   let mut result = ""
   let mut v = value & 0xFFFFFFFF
   for j = 0; j < 8; j = j + 1 {
-    let digit = v & 0xF
-    result = hex_chars[digit].to_string() + result
+    result = hex_chars[v & 0xF].to_string() + result
     v = v >> 4
   }
   result

@@ -189,7 +189,7 @@ fn reconstruct_path(
 ///| 零启发式函数（相当于 Dijkstra）
 
 ///|
-/// 实际使用时应该根据图的特性实现合适的启发式函数
+/// TODO: 根据实际场景实现合适的启发式函数（曼哈顿距离、欧几里得距离等）
 pub fn zero_heuristic(_vertex : Int) -> Double {
   0.0
 }

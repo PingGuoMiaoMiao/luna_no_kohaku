@@ -1,8 +1,17 @@
 ///| 基础字符串操作
 
 ///|
+/// 使用 lambda 表达式折叠数组（辅助函数）
+fn[T, U] fold(arr : Array[T], init : U, f : (U, T) -> U) -> U {
+  let mut acc = init
+  for i = 0; i < arr.length(); i = i + 1 {
+    acc = f(acc, arr[i])
+  }
+  acc
+}
 
-///| 包含 split, join, substring, replace 等常用操作
+///|
+/// 包含 split, join, substring, replace 等常用操作
 
 ///|
 /// 分割字符串
@@ -81,7 +90,6 @@ pub fn split(str : String, delimiter : String) -> Array[String] {
 /// 连接字符串数组
 /// 使用指定的分隔符连接字符串数组
 /// 时间复杂度：O(n)，其中 n 是所有字符串的总长度
-/// 优化：直接拼接，避免额外分配
 pub fn join(strings : Array[String], delimiter : String) -> String {
   if strings.length() == 0 {
     return ""
@@ -89,29 +97,22 @@ pub fn join(strings : Array[String], delimiter : String) -> String {
   if strings.length() == 1 {
     return strings[0]
   }
-  // 优化：预先计算总长度可以减少重新分配
-  let mut result = strings[0]
-  for i = 1; i < strings.length(); i = i + 1 {
-    result = result + delimiter + strings[i]
-  }
-  result
+  fold(strings, "", fn(acc, str) {
+    if acc.length() == 0 {
+      str
+    } else {
+      acc + delimiter + str
+    }
+  })
 }
 
 ///|
 /// 获取子字符串
 /// 从 start 位置开始，到 end 位置（不包含）的子字符串
-/// 优化：直接构建字符串，避免中间数组
 pub fn substring(str : String, start : Int, end : Int) -> String {
-  if start < 0 {
+  if start < 0 || end > str.length() || start >= end {
     return ""
   }
-  if end > str.length() {
-    return ""
-  }
-  if start >= end {
-    return ""
-  }
-  // 优化：直接构建字符串，避免中间数组
   let mut result = ""
   for i = start; i < end; i = i + 1 {
     result = result + str[i].to_string()

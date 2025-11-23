@@ -1,6 +1,7 @@
 ///| Binary Search Tree（二叉搜索树）实现
 
 ///|
+/// TODO: 使用真正的树结构实现 BST（节点结构，O(log n) 操作）
 /// 使用数组存储，简化实现
 pub struct BST[T] {
   values : Array[T]

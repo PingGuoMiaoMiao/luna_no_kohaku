@@ -173,6 +173,7 @@ fn Trie::dfs_collect(
   for i = 0; i < node.children.length(); i = i + 1 {
     match node.children[i] {
       Some(child) => {
+        // TODO: 修复字符转换逻辑（索引转字符）
         // 注意：这里简化处理，实际应该将索引转换为字符
         // 由于 MoonBit 的限制，这里使用索引的字符串表示
         let char_str = i.to_string()

@@ -59,6 +59,7 @@ pub fn decode(encoded : String) -> String {
   let len = encoded.length()
   let mut i = 0
 
+  // TODO: 使用预计算的查找表优化 Base64 解码性能
   // 构建反向查找表（简化实现：直接查找）
   // 注意：这里使用线性查找，实际应用中可以使用预计算的查找表
   while i < len {

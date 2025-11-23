@@ -6,21 +6,16 @@
 /// 使用频率最低的元素最先被淘汰
 
 ///|
-/// 工具函数：更新数组中的单个元素
+/// 工具函数
 fn[T] update_array(arr : Array[T], index : Int, value : T) -> Array[T] {
   let result = []
   for i = 0; i < arr.length(); i = i + 1 {
-    if i == index {
-      result.push(value) |> ignore
-    } else {
-      result.push(arr[i]) |> ignore
-    }
+    result.push(if i == index { value } else { arr[i] }) |> ignore
   }
   result
 }
 
 ///|
-/// 工具函数：移除数组中指定索引的元素
 fn[T] remove_at(arr : Array[T], index : Int) -> Array[T] {
   let result = []
   for i = 0; i < arr.length(); i = i + 1 {
@@ -32,7 +27,6 @@ fn[T] remove_at(arr : Array[T], index : Int) -> Array[T] {
 }
 
 ///|
-/// 工具函数：在数组末尾添加元素
 fn[T] append(arr : Array[T], value : T) -> Array[T] {
   [..arr, value]
 }
