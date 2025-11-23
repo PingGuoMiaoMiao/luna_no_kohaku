@@ -4,6 +4,38 @@
 
 ///|
 /// 使用队列实现，最先进入的元素最先被淘汰
+
+///|
+/// 工具函数：更新数组中的单个元素
+fn[T] update_array(arr : Array[T], index : Int, value : T) -> Array[T] {
+  let result = []
+  for i = 0; i < arr.length(); i = i + 1 {
+    if i == index {
+      result.push(value) |> ignore
+    } else {
+      result.push(arr[i]) |> ignore
+    }
+  }
+  result
+}
+
+///|
+/// 工具函数：移除数组中第一个元素
+fn[T] remove_first(arr : Array[T]) -> Array[T] {
+  let result = []
+  for i = 1; i < arr.length(); i = i + 1 {
+    result.push(arr[i]) |> ignore
+  }
+  result
+}
+
+///|
+/// 工具函数：在数组末尾添加元素
+fn[T] append(arr : Array[T], value : T) -> Array[T] {
+  [..arr, value]
+}
+
+///|
 pub struct FIFOCache[K, V] {
   capacity : Int
   data : Array[(K, V)]
@@ -55,39 +87,22 @@ pub fn[K : Compare, V] FIFOCache::put(
     }
   }
   if exists_idx >= 0 {
-    // 已存在，只更新值，保持位置（FIFO 不改变顺序）
-    let new_data = {
-      let temp = []
-      for i = 0; i < self.data.length(); i = i + 1 {
-        if i == exists_idx {
-          temp.push((key, value)) |> ignore
-        } else {
-          temp.push(self.data[i]) |> ignore
-        }
-      }
-      temp
-    }
+    // 已存在，只更新值，保持位置（FIFO 不改变顺序）（优化：使用工具函数）
+    let new_data = update_array(self.data, exists_idx, (key, value))
     FIFOCache::{ capacity: self.capacity, data: new_data, len: self.len }
   } else if self.len >= self.capacity {
-    // 容量已满，移除最旧的元素（第一个），添加新元素
-    let updated_data = {
-      let temp = []
-      for i = 1; i < self.data.length(); i = i + 1 {
-        temp.push(self.data[i]) |> ignore
-      }
-      temp.push((key, value)) |> ignore
-      temp
-    }
+    // 容量已满，移除最旧的元素（第一个），添加新元素（优化：使用工具函数）
+    let updated_data = append(remove_first(self.data), (key, value))
     FIFOCache::{
       capacity: self.capacity,
       data: updated_data,
       len: self.capacity,
     }
   } else {
-    // 容量未满，直接添加
+    // 容量未满，直接添加（优化：使用工具函数）
     FIFOCache::{
       capacity: self.capacity,
-      data: [..self.data, (key, value)],
+      data: append(self.data, (key, value)),
       len: self.len + 1,
     }
   }

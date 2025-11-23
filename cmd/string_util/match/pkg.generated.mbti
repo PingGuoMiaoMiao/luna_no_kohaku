@@ -1,0 +1,30 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/string_util/match"
+
+// Values
+fn brute_force_contains(String, String) -> Bool
+
+fn brute_force_find_all(String, String) -> Array[Int]
+
+fn brute_force_find_first(String, String) -> Int
+
+fn kmp_contains(String, String) -> Bool
+
+fn kmp_find_all(String, String) -> Array[Int]
+
+fn kmp_find_first(String, String) -> Int
+
+fn rabin_karp_contains(String, String) -> Bool
+
+fn rabin_karp_find_all(String, String) -> Array[Int]
+
+fn rabin_karp_find_first(String, String) -> Int
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

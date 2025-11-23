@@ -181,25 +181,91 @@ fn[T : Compare] BST::binary_search(
 }
 
 ///|
-/// 内部方法：排序数组（优化版冒泡排序）
-/// 优化：对于小数组，冒泡排序已经足够高效
-/// 优化：使用展开运算符复制数组（如果可能）
+/// 内部方法：排序数组（归并排序）
+/// 优化：使用归并排序，时间复杂度 O(n log n)，适合函数式编程
+/// 对于小数组（< 10），使用插入排序
 fn[T : Compare] BST::sort_array(arr : Array[T]) -> Array[T] {
   let len = arr.length()
   if len <= 1 {
     return arr
   }
-  // 优化：使用展开运算符复制数组
+  // 对于小数组，使用插入排序
+  if len < 10 {
+    return BST::insertion_sort(arr)
+  }
+  // 对于大数组，使用归并排序
+  BST::merge_sort(arr)
+}
+
+///|
+/// 内部方法：插入排序（用于小数组）
+fn[T : Compare] BST::insertion_sort(arr : Array[T]) -> Array[T] {
+  let len = arr.length()
+  if len <= 1 {
+    return arr
+  }
   let result = [..arr]
-  // 冒泡排序（对小数组足够高效）
-  for i = 0; i < len - 1; i = i + 1 {
-    for j = 0; j < len - i - 1; j = j + 1 {
-      if result[j + 1].compare(result[j]) < 0 {
-        let temp = result[j]
-        result[j] = result[j + 1]
-        result[j + 1] = temp
-      }
+  for i = 1; i < len; i = i + 1 {
+    let key = result[i]
+    let mut j = i - 1
+    while j >= 0 && result[j].compare(key) > 0 {
+      result[j + 1] = result[j]
+      j = j - 1
     }
+    result[j + 1] = key
+  }
+  result
+}
+
+///|
+/// 内部方法：归并排序
+fn[T : Compare] BST::merge_sort(arr : Array[T]) -> Array[T] {
+  let len = arr.length()
+  if len <= 1 {
+    return arr
+  }
+  let mid = len / 2
+  let left = {
+    let arr_left = []
+    for i = 0; i < mid; i = i + 1 {
+      arr_left.push(arr[i]) |> ignore
+    }
+    arr_left
+  }
+  let right = {
+    let arr_right = []
+    for i = mid; i < len; i = i + 1 {
+      arr_right.push(arr[i]) |> ignore
+    }
+    arr_right
+  }
+  let sorted_left = BST::merge_sort(left)
+  let sorted_right = BST::merge_sort(right)
+  BST::merge(sorted_left, sorted_right)
+}
+
+///|
+/// 内部方法：合并两个已排序数组
+fn[T : Compare] BST::merge(left : Array[T], right : Array[T]) -> Array[T] {
+  let result = []
+  let mut i = 0
+  let mut j = 0
+  while i < left.length() && j < right.length() {
+    if left[i].compare(right[j]) <= 0 {
+      result.push(left[i]) |> ignore
+      i = i + 1
+    } else {
+      result.push(right[j]) |> ignore
+      j = j + 1
+    }
+  }
+  while i < left.length() {
+    result.push(left[i]) |> ignore
+    i = i + 1
+  }
+  while j < right.length() {
+    result.push(right[j]) |> ignore
+    j = j + 1
   }
   result
 }

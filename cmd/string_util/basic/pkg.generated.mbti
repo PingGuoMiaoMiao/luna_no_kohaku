@@ -1,0 +1,20 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/string_util/basic"
+
+// Values
+fn join(Array[String], String) -> String
+
+fn replace(String, String, String) -> String
+
+fn split(String, String) -> Array[String]
+
+fn substring(String, Int, Int) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

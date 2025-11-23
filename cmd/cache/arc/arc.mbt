@@ -4,6 +4,50 @@
 
 ///|
 /// 自适应替换缓存，结合 LRU 和 LFU 的优点
+
+///|
+/// 工具函数：更新数组中的单个元素
+fn[T] update_array(arr : Array[T], index : Int, value : T) -> Array[T] {
+  let result = []
+  for i = 0; i < arr.length(); i = i + 1 {
+    if i == index {
+      result.push(value) |> ignore
+    } else {
+      result.push(arr[i]) |> ignore
+    }
+  }
+  result
+}
+
+///|
+/// 工具函数：移除数组中指定索引的元素
+fn[T] remove_at(arr : Array[T], index : Int) -> Array[T] {
+  let result = []
+  for i = 0; i < arr.length(); i = i + 1 {
+    if i != index {
+      result.push(arr[i]) |> ignore
+    }
+  }
+  result
+}
+
+///|
+/// 工具函数：在数组末尾添加元素
+fn[T] append(arr : Array[T], value : T) -> Array[T] {
+  [..arr, value]
+}
+
+///|
+/// 工具函数：移除数组中第一个元素
+fn[T] remove_first(arr : Array[T]) -> Array[T] {
+  let result = []
+  for i = 1; i < arr.length(); i = i + 1 {
+    result.push(arr[i]) |> ignore
+  }
+  result
+}
+
+///|
 pub struct ARCCache[K, V] {
   capacity : Int
   t1 : Array[(K, V)] // LRU 列表（最近访问的）
@@ -66,28 +110,12 @@ pub fn[K : Compare, V] ARCCache::get(
   match found_value {
     Some(_) =>
       if found_in_t1 {
-        // 从 t1 移到 t2（提升为频繁访问）
-        let new_t1 = {
-          let temp = []
-          for i = 0; i < self.t1.length(); i = i + 1 {
-            if i != found_idx {
-              temp.push(self.t1[i]) |> ignore
-            }
-          }
-          temp
-        }
-        let new_t1_order = {
-          let temp = []
-          for i = 0; i < self.t1_order.length(); i = i + 1 {
-            if i != found_idx {
-              temp.push(self.t1_order[i]) |> ignore
-            }
-          }
-          temp
-        }
+        // 从 t1 移到 t2（提升为频繁访问）（优化：使用工具函数）
         let (k, v) = self.t1[found_idx]
-        let new_t2 = [..self.t2, (k, v)]
-        let new_t2_order = [..self.t2_order, self.next_order]
+        let new_t1 = remove_at(self.t1, found_idx)
+        let new_t1_order = remove_at(self.t1_order, found_idx)
+        let new_t2 = append(self.t2, (k, v))
+        let new_t2_order = append(self.t2_order, self.next_order)
 
         // 调整 p
         let delta = if self.b1.length() >= self.b2.length() {
@@ -115,25 +143,13 @@ pub fn[K : Compare, V] ARCCache::get(
         }
         (new_cache, found_value)
       } else {
-        // 在 t2 中，更新访问顺序
-        let new_t2 = {
-          let temp = []
-          for i = 0; i < self.t2.length(); i = i + 1 {
-            temp.push(self.t2[i]) |> ignore
-          }
-          temp
-        }
-        let new_t2_order = {
-          let temp = []
-          for i = 0; i < self.t2_order.length(); i = i + 1 {
-            if i == found_idx {
-              temp.push(self.next_order) |> ignore
-            } else {
-              temp.push(self.t2_order[i]) |> ignore
-            }
-          }
-          temp
-        }
+        // 在 t2 中，更新访问顺序（优化：使用工具函数）
+        let new_t2 = self.t2
+        let new_t2_order = update_array(
+          self.t2_order,
+          found_idx,
+          self.next_order,
+        )
         let new_cache = ARCCache::{
           capacity: self.capacity,
           t1: self.t1,
@@ -187,38 +203,24 @@ pub fn[K : Compare, V] ARCCache::put(
       self.p + delta
     }
 
-    // 从 b1 移除
+    // 从 b1 移除（优化：使用工具函数）
     let new_b1 = {
-      let temp = []
+      let result = []
       for i = 0; i < self.b1.length(); i = i + 1 {
         if self.b1[i].compare(key) != 0 {
-          temp.push(self.b1[i]) |> ignore
+          result.push(self.b1[i]) |> ignore
         }
       }
-      temp
+      result
     }
 
-    // 添加到 t2
-    let new_t2 = [..self.t2, (key, value)]
-    let new_t2_order = [..self.t2_order, self.next_order]
+    // 添加到 t2（优化：使用工具函数）
+    let new_t2 = append(self.t2, (key, value))
+    let new_t2_order = append(self.t2_order, self.next_order)
 
-    // 如果 t2 超过容量，移除最旧的
+    // 如果 t2 超过容量，移除最旧的（优化：使用工具函数）
     let (final_t2, final_t2_order) = if new_t2.length() > self.capacity {
-      let t = {
-        let temp = []
-        for i = 1; i < new_t2.length(); i = i + 1 {
-          temp.push(new_t2[i]) |> ignore
-        }
-        temp
-      }
-      let o = {
-        let temp = []
-        for i = 1; i < new_t2_order.length(); i = i + 1 {
-          temp.push(new_t2_order[i]) |> ignore
-        }
-        temp
-      }
-      (t, o)
+      (remove_first(new_t2), remove_first(new_t2_order))
     } else {
       (new_t2, new_t2_order)
     }
@@ -300,30 +302,21 @@ pub fn[K : Compare, V] ARCCache::put(
         } else {
           None
         }
-        let new_t1 = {
-          let temp = []
-          if self.t1.length() > 0 {
-            for i = 1; i < self.t1.length(); i = i + 1 {
-              temp.push(self.t1[i]) |> ignore
-            }
-          }
-          temp.push((key, value)) |> ignore
-          temp
+        // 优化：使用工具函数
+        let new_t1 = if self.t1.length() > 0 {
+          append(remove_first(self.t1), (key, value))
+        } else {
+          append(self.t1, (key, value))
         }
-        let new_t1_order = {
-          let temp = []
-          if self.t1_order.length() > 0 {
-            for i = 1; i < self.t1_order.length(); i = i + 1 {
-              temp.push(self.t1_order[i]) |> ignore
-            }
-          }
-          temp.push(self.next_order) |> ignore
-          temp
+        let new_t1_order = if self.t1_order.length() > 0 {
+          append(remove_first(self.t1_order), self.next_order)
+        } else {
+          append(self.t1_order, self.next_order)
         }
 
-        // 将移除的键添加到 b1
+        // 将移除的键添加到 b1（优化：使用工具函数）
         let new_b1 = match removed_key {
-          Some(k) => [..self.b1, k]
+          Some(k) => append(self.b1, k)
           None => self.b1
         }
         ARCCache::{
@@ -344,32 +337,25 @@ pub fn[K : Compare, V] ARCCache::put(
         } else {
           None
         }
-        let new_t2 = {
-          let temp = []
-          if self.t2.length() > 0 {
-            for i = 1; i < self.t2.length(); i = i + 1 {
-              temp.push(self.t2[i]) |> ignore
-            }
-          }
-          temp
+        // 优化：使用工具函数
+        let new_t2 = if self.t2.length() > 0 {
+          remove_first(self.t2)
+        } else {
+          self.t2
         }
-        let new_t2_order = {
-          let temp = []
-          if self.t2_order.length() > 0 {
-            for i = 1; i < self.t2_order.length(); i = i + 1 {
-              temp.push(self.t2_order[i]) |> ignore
-            }
-          }
-          temp
+        let new_t2_order = if self.t2_order.length() > 0 {
+          remove_first(self.t2_order)
+        } else {
+          self.t2_order
         }
 
-        // 添加到 t1
-        let new_t1 = [..self.t1, (key, value)]
-        let new_t1_order = [..self.t1_order, self.next_order]
+        // 添加到 t1（优化：使用工具函数）
+        let new_t1 = append(self.t1, (key, value))
+        let new_t1_order = append(self.t1_order, self.next_order)
 
-        // 将移除的键添加到 b2
+        // 将移除的键添加到 b2（优化：使用工具函数）
         let new_b2 = match removed_key {
-          Some(k) => [..self.b2, k]
+          Some(k) => append(self.b2, k)
           None => self.b2
         }
         ARCCache::{
@@ -385,9 +371,9 @@ pub fn[K : Compare, V] ARCCache::put(
         }
       }
     } else {
-      // 容量未满，直接添加到 t1
-      let new_t1 = [..self.t1, (key, value)]
-      let new_t1_order = [..self.t1_order, self.next_order]
+      // 容量未满，直接添加到 t1（优化：使用工具函数）
+      let new_t1 = append(self.t1, (key, value))
+      let new_t1_order = append(self.t1_order, self.next_order)
       ARCCache::{
         capacity: self.capacity,
         t1: new_t1,

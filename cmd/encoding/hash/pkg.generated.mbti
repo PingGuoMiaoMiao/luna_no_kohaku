@@ -1,0 +1,20 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/encoding/hash"
+
+// Values
+fn fnv1a_hash(String) -> Int
+
+fn md5(String) -> String
+
+fn sha1(String) -> String
+
+fn simple_hash(String) -> Int
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

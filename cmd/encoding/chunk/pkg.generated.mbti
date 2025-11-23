@@ -1,0 +1,24 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/encoding/chunk"
+
+// Values
+fn chunk_ints(Array[Int], Int) -> Array[Array[Int]]
+
+fn chunk_string(String, Int) -> Array[String]
+
+fn[T, U] map_chunks(Array[T], (T) -> U) -> Array[U]
+
+fn merge_chunks(Array[String]) -> String
+
+fn merge_int_chunks(Array[Array[Int]]) -> Array[Int]
+
+fn[T, U] process_chunks_parallel(Array[T], (T) -> U) -> Array[U]
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

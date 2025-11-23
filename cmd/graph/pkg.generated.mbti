@@ -1,0 +1,89 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/graph"
+
+// Values
+fn astar(Graph, Int, Int, (Int) -> Double) -> AStarResult
+
+fn bfs(Graph, Int) -> BFSResult
+
+fn dfs(Graph, Int) -> DFSResult
+
+fn dfs_all(Graph) -> DFSResult
+
+fn dijkstra(Graph, Int) -> ShortestPathResult
+
+fn get_shortest_path(ShortestPathResult, Int, Int) -> Array[Int]
+
+fn kruskal(Graph) -> MSTResult
+
+fn prim(Graph, Int) -> MSTResult
+
+fn random_dfs(Graph, Int) -> DFSResult
+
+fn topological_sort(Graph) -> TopologicalSortResult
+
+fn topological_sort_kahn(Graph) -> TopologicalSortResult
+
+fn zero_heuristic(Int) -> Double
+
+// Errors
+
+// Types and methods
+pub struct AStarResult {
+  path : Array[Int]
+  cost : Double
+  found : Bool
+}
+
+pub struct BFSResult {
+  visited : Array[Bool]
+  distance : Array[Int]
+  parent : Array[Int?]
+}
+
+pub struct DFSResult {
+  visited : Array[Bool]
+  discovery_time : Array[Int]
+  finish_time : Array[Int]
+  parent : Array[Int?]
+}
+
+pub struct Edge {
+  from : Int
+  to : Int
+  weight : Double
+}
+fn Edge::new(Int, Int, Double) -> Self
+fn Edge::new_unweighted(Int, Int) -> Self
+
+pub struct Graph {
+  vertices : Int
+  edges : Array[Array[Edge]]
+}
+fn Graph::add_edge(Self, Int, Int, Double) -> Self
+fn Graph::add_edge_unweighted(Self, Int, Int) -> Self
+fn Graph::add_undirected_edge(Self, Int, Int, Double) -> Self
+fn Graph::get_edges(Self, Int) -> Array[Edge]
+fn Graph::new(Int) -> Self
+fn Graph::vertex_count(Self) -> Int
+
+pub struct MSTResult {
+  edges : Array[Edge]
+  total_weight : Double
+}
+
+pub struct ShortestPathResult {
+  distance : Array[Double]
+  parent : Array[Int?]
+  reachable : Array[Bool]
+}
+
+pub struct TopologicalSortResult {
+  order : Array[Int]
+  has_cycle : Bool
+}
+
+// Type aliases
+
+// Traits
+

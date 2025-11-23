@@ -1,0 +1,48 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/encoding/bit"
+
+// Values
+fn bit_and(Int, Int) -> Int
+
+fn bit_not(Int) -> Int
+
+fn bit_or(Int, Int) -> Int
+
+fn bit_xor(Int, Int) -> Int
+
+fn clear_bit(Int, Int) -> Int
+
+fn compress_bits(Array[Int]) -> String
+
+fn decompress_bits(String) -> Array[Int]
+
+fn from_binary_string(String) -> Int
+
+fn get_bit(Int, Int) -> Int
+
+fn leading_zeros(Int) -> Int
+
+fn popcount(Int) -> Int
+
+fn set_bit(Int, Int) -> Int
+
+fn shift_left(Int, Int) -> Int
+
+fn shift_right(Int, Int) -> Int
+
+fn shift_right_unsigned(Int, Int) -> Int
+
+fn test_bit(Int, Int) -> Bool
+
+fn to_binary_string(Int) -> String
+
+fn toggle_bit(Int, Int) -> Int
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

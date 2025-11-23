@@ -1,0 +1,32 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/string_util/trie"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct Trie {
+  root : TrieNode
+  size : Int
+}
+fn Trie::autocomplete(Self, String, Int) -> Array[String]
+fn Trie::clear(Self) -> Self
+fn Trie::find_prefix(Self, String) -> Array[String]
+fn Trie::insert(Self, String) -> Self
+fn Trie::is_empty(Self) -> Bool
+fn Trie::new() -> Self
+fn Trie::search(Self, String) -> Bool
+fn Trie::size(Self) -> Int
+fn Trie::starts_with(Self, String) -> Bool
+
+pub struct TrieNode {
+  children : Array[TrieNode?]
+  is_end : Bool
+  count : Int
+}
+
+// Type aliases
+
+// Traits
+

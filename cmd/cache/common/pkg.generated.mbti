@@ -2,22 +2,29 @@
 package "PingGuoMiaoMiao/luna_no_kohaku/cmd/cache/common"
 
 // Values
+fn[T] append(Array[T], T) -> Array[T]
+
+fn[T] remove_at(Array[T], Int) -> Array[T]
+
+fn[T] update_array(Array[T], Int, T) -> Array[T]
 
 // Errors
 
 // Types and methods
-pub struct SimpleMap[K, V] {
-  keys : Array[K]
-  values : Array[V]
-  len : Int
+pub struct HashMap[K, V] {
+  buckets : Array[(K, V)?]
+  size : Int
+  capacity : Int
 }
-fn[K, V] SimpleMap::clear(Self[K, V]) -> Self[K, V]
-fn[K : Compare, V] SimpleMap::contains_key(Self[K, V], K) -> Bool
-fn[K : Compare, V] SimpleMap::get(Self[K, V], K) -> (Self[K, V], V?)
-fn[K, V] SimpleMap::new() -> Self[K, V]
-fn[K : Compare, V] SimpleMap::put(Self[K, V], K, V) -> Self[K, V]
-fn[K : Compare, V] SimpleMap::remove(Self[K, V], K) -> (Self[K, V], Bool)
-fn[K, V] SimpleMap::size(Self[K, V]) -> Int
+fn[K, V] HashMap::clear(Self[K, V]) -> Self[K, V]
+fn[K : Compare, V] HashMap::contains_key(Self[K, V], K) -> Bool
+fn[K : Compare, V] HashMap::get(Self[K, V], K) -> (Self[K, V], V?)
+fn[K, V] HashMap::is_empty(Self[K, V]) -> Bool
+fn[K, V] HashMap::new() -> Self[K, V]
+fn[K : Compare, V] HashMap::put(Self[K, V], K, V) -> Self[K, V]
+fn[K : Compare, V] HashMap::remove(Self[K, V], K) -> (Self[K, V], Bool)
+fn[K, V] HashMap::size(Self[K, V]) -> Int
+fn[K, V] HashMap::with_capacity(Int) -> Self[K, V]
 
 // Type aliases
 

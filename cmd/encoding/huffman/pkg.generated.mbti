@@ -1,0 +1,38 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/encoding/huffman"
+
+// Values
+fn build_huffman_tree(Array[CharFreq]) -> HuffmanNode?
+
+fn compress(String) -> (String, HuffmanNode?)
+
+fn count_frequencies(String) -> Array[CharFreq]
+
+fn decode(String, HuffmanNode?) -> String
+
+fn decompress(String, HuffmanNode?) -> String
+
+fn encode(String, Array[(Int, String)]) -> String
+
+fn generate_codes(HuffmanNode?) -> Array[(Int, String)]
+
+// Errors
+
+// Types and methods
+pub struct CharFreq {
+  char : Int
+  freq : Int
+}
+fn CharFreq::new(Int, Int) -> Self
+
+pub struct HuffmanNode {
+  char : Int?
+  freq : Int
+  left : HuffmanNode?
+  right : HuffmanNode?
+}
+
+// Type aliases
+
+// Traits
+

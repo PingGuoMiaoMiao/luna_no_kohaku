@@ -1,0 +1,18 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "PingGuoMiaoMiao/luna_no_kohaku/cmd/encoding/crc"
+
+// Values
+fn crc32(String) -> Int
+
+fn crc32_bytes(Array[Int]) -> Int
+
+fn crc32_to_hex(Int) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+
