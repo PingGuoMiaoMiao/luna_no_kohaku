@@ -55,6 +55,9 @@ luna_no_kohaku/
 │       ├── hash/         # 哈希函数（MD5/SHA1）
 │       ├── serialize/    # 序列化
 │       └── chunk/        # 分块处理
+│   │
+│   └── data_mining/      # 数据挖掘算法
+│       └── kmeans/       # K-Means 颜色聚类 🎨
 │
 └── doc/                  # 文档
     ├── OPTIMIZATION_SUGGESTIONS.md
@@ -101,6 +104,9 @@ luna_no_kohaku/
 - ✅ **哈希函数**：MD5、SHA1、FNV-1a
 - ✅ **序列化**：整数、字符串、布尔数组序列化
 - ✅ **分块处理**：数据分块和合并
+
+### 🎨 数据挖掘 (data_mining)
+- ✅ **K-Means 颜色聚类**：从图片中提取主色调，让图片"说话"！支持自定义聚类数量、图像大小，还能在终端里看彩色预览，超酷的！
 
 ## 💡 使用示例
 
@@ -174,6 +180,53 @@ let crc = crc32("hello")  // 计算校验和
 let hex = crc32_to_hex(crc)  // 转换为十六进制
 ```
 
+### 🎨 K-Means 颜色聚类示例
+
+想从图片里提取主色调？想看看一张照片到底用了哪些颜色？K-Means 来帮你！
+
+```bash
+# 使用 5 种颜色，图像大小 64x64（默认）
+./cmd/data_mining/kmeans/run.sh -k 5
+
+# 使用 3 种颜色，图像大小 32x32，显示详细信息
+./cmd/data_mining/kmeans/run.sh -k 3 -z 32 -v
+
+# 使用 10 种颜色，图像大小 128x128，最大迭代 50 次
+./cmd/data_mining/kmeans/run.sh -k 10 -z 128 -m 50
+```
+
+**功能亮点**：
+- 🎯 **智能聚类**：自动找出图片中的主要颜色
+- 🖼️ **图像压缩**：支持自定义图像大小，快速处理
+- 🎨 **终端预览**：直接在终端里看彩色图片，超炫酷！
+- ⚙️ **灵活配置**：可调聚类数量、迭代次数、收敛阈值等
+- 🚀 **一键运行**：简单脚本，参数丰富，想怎么玩就怎么玩！
+
+**使用场景**：
+- 提取图片主色调做配色方案
+- 图片压缩和颜色量化
+- 艺术创作和设计参考
+- 学习 K-Means 算法的实际应用
+
+**快速上手**：
+1. 把你的图片放到 `cmd/data_mining/kmeans/images/` 目录
+2. 运行脚本，指定你想要的参数
+3. 看！终端里出现了彩色图片预览，还有提取的主颜色！
+4. 是不是很酷？😎
+
+**参数说明**：
+- `-k, --clusters N`：想要提取几种颜色？（默认 5 种）
+- `-z, --size N`：图片最大尺寸，越小处理越快（默认 64）
+- `-v, --verbose`：显示详细信息，看看算法是怎么工作的
+- `-m, --max_iter N`：最大迭代次数（默认 30）
+- `-h, --help`：查看完整帮助
+
+**小贴士**：
+- 想快速预览？用 `-z 32` 把图片缩小
+- 想要更精确的颜色？增加 `-k` 的值
+- 图片太大处理慢？用 `-z` 限制尺寸
+- 想看算法过程？加上 `-v` 参数
+
 ## ⚡ 运行测试
 
 ```bash
@@ -185,6 +238,10 @@ moon test cmd/dsa
 moon test cmd/cache
 moon test cmd/graph
 moon test cmd/encoding
+moon test cmd/data_mining
+
+# 运行 K-Means 程序（需要先准备图片）
+./cmd/data_mining/kmeans/run.sh -k 5 -v
 
 # 检查代码
 moon check
